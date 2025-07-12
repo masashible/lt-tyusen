@@ -59,6 +59,24 @@
         </div>
     </main>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script>
+      // Firebase 設定
+      const firebaseConfig = {
+        apiKey: "AIzaSyBpPgGty0kDVCbJdJYIPU75YkTmKsqkSbc",
+        authDomain: "lt-tyusen.firebaseapp.com",
+        projectId: "lt-tyusen",
+        storageBucket: "lt-tyusen.firebasestorage.app",
+        messagingSenderId: "493442648894",
+        appId: "1:493442648894:web:e022f3b47fc5c1f4cbba6f",
+        measurementId: "G-DXZ1VP7ESC"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+    </script>
+
     <script src="../shared/utils.js"></script>
     <script src="../shared/api.js"></script>
     <script src="lottery.js"></script>
