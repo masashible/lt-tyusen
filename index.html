@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プレゼン登壇者申し込み</title>
+    <link rel="stylesheet" href="shared/common.css">
+    <link rel="stylesheet" href="pages/apply.css">
+</head>
+<body>
+    <header>
+        <h1>プレゼン登壇者申し込み</h1>
+        <nav>
+            <a href="admin/lottery.html" class="nav-link admin-link">🔐 抽選管理</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>プレゼンテーション申し込み</h2>
+            <p>あなたの名前を入力して、プレゼンテーションの抽選に参加してください。</p>
+            
+            <form id="apply-form">
+                <div class="form-group">
+                    <label for="participant-name">お名前</label>
+                    <input 
+                        type="text" 
+                        id="participant-name" 
+                        name="name" 
+                        placeholder="例: 田中太郎"
+                        maxlength="50"
+                        required
+                    >
+                    <small class="form-help">※50文字以内で入力してください</small>
+                </div>
+                
+                <button type="submit" class="btn" id="submit-btn">
+                    申し込む
+                </button>
+            </form>
+        </div>
+
+        <div class="container">
+            <h3>現在の参加者</h3>
+            <div id="participants-count" class="participants-count">
+                読み込み中...
+            </div>
+            <div id="participants-list" class="participants-list">
+                <!-- 参加者リストが動的に表示される -->
+            </div>
+        </div>
+
+        <div class="container info-section">
+            <h3>📝 申し込みについて</h3>
+            <ul>
+                <li>プレゼンテーションの順番は後日抽選で決定されます</li>
+                <li>同じ名前での重複申し込みはできません</li>
+                <li>申し込み後のキャンセルは管理者にお申し出ください</li>
+            </ul>
+            
+            <div class="admin-access">
+                <h4>🔐 管理者の方へ</h4>
+                <p>抽選の実行は <a href="admin/lottery.html" class="admin-link">抽選管理画面</a> で行ってください。</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="shared/utils.js"></script>
+    <script src="shared/api.js"></script>
+    <script src="pages/apply.js"></script>
+    <script>
+
+        // エラーハンドリング
+        window.addEventListener('error', (e) => {
+            console.error('Global error:', e.error);
+        });
+
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('Unhandled promise rejection:', e.reason);
+        });
+
+        // 申し込みページ初期化
+        try {
+            new ApplyPage();
+        } catch (error) {
+            console.error('ApplyPage initialization error:', error);
+            document.querySelector('main').innerHTML = `
+                <div class="container">
+                    <div class="error">
+                        <h3>アプリケーションの初期化に失敗しました</h3>
+                        <p>エラー: ${error.message}</p>
+                        <button onclick="location.reload()">リロード</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <h1>Test Page</h1>
+    <button onclick="testFetch()">Test Fetch</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testFetch() {
+            const result = document.getElementById('result');
+            try {
+                console.log('Testing fetch...');
+                const response = await fetch('pages/apply.html');
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const text = await response.text();
+                console.log('Text length:', text.length);
+                result.innerHTML = `<p>Success! Length: ${text.length}</p><pre>${text.substring(0, 200)}...</pre>`;
+            } catch (error) {
+                console.error('Error:', error);
+                result.innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

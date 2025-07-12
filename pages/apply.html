@@ -1,0 +1,33 @@
+<div class="container">
+    <h2>プレゼン登壇者申し込み</h2>
+    <p>あなたの名前を入力して、プレゼンテーションの抽選に参加してください。</p>
+    
+    <form id="apply-form">
+        <div class="form-group">
+            <label for="participant-name">お名前</label>
+            <input 
+                type="text" 
+                id="participant-name" 
+                name="name" 
+                placeholder="例: 田中太郎"
+                maxlength="50"
+                required
+            >
+            <small class="form-help">※50文字以内で入力してください</small>
+        </div>
+        
+        <button type="submit" class="btn" id="submit-btn">
+            申し込む
+        </button>
+    </form>
+</div>
+
+<div class="container">
+    <h3>現在の参加者</h3>
+    <div id="participants-count" class="participants-count">
+        読み込み中...
+    </div>
+    <div id="participants-list" class="participants-list">
+        <!-- 参加者リストが動的に表示される -->
+    </div>
+</div>

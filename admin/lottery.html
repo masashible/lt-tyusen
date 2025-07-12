@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽選管理 - プレゼン登壇者抽選アプリ</title>
+    <link rel="stylesheet" href="../shared/common.css">
+    <link rel="stylesheet" href="lottery.css">
+</head>
+<body>
+    <header>
+        <h1>抽選管理画面</h1>
+        <nav>
+            <a href="../index.html" class="nav-link">申し込み画面へ</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>プレゼンテーション順序抽選</h2>
+            <p>申し込み済み参加者の中からプレゼンテーションの順番を抽選で決定します。</p>
+            
+            <div class="draw-controls">
+                <button id="draw-btn" class="btn">
+                    抽選開始
+                </button>
+                <button id="reset-btn" class="btn btn-danger" style="display: none;">
+                    抽選リセット
+                </button>
+                <button id="refresh-btn" class="btn btn-secondary">
+                    参加者リスト更新
+                </button>
+                <button id="clear-all-btn" class="btn btn-warning">
+                    全データ削除
+                </button>
+            </div>
+            
+            <div id="draw-status" class="draw-status">
+                <!-- 抽選状況が表示される -->
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="draw-results">
+                <div class="results-section">
+                    <h3>抽選済み <span id="drawn-count" class="count-badge">0</span></h3>
+                    <div id="drawn-list" class="participants-display">
+                        <div class="empty-state">まだ抽選されていません</div>
+                    </div>
+                </div>
+                
+                <div class="results-section">
+                    <h3>未抽選 <span id="undrawn-count" class="count-badge">0</span></h3>
+                    <div id="undrawn-list" class="participants-display">
+                        <div class="empty-state">読み込み中...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../shared/utils.js"></script>
+    <script src="../shared/api.js"></script>
+    <script src="lottery.js"></script>
+    <script>
+
+        // エラーハンドリング
+        window.addEventListener('error', (e) => {
+            console.error('Global error:', e.error);
+        });
+
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('Unhandled promise rejection:', e.reason);
+        });
+
+        // 抽選ページ初期化
+        try {
+            new LotteryPage();
+        } catch (error) {
+            console.error('LotteryPage initialization error:', error);
+            document.querySelector('main').innerHTML = `
+                <div class="container">
+                    <div class="error">
+                        <h3>アプリケーションの初期化に失敗しました</h3>
+                        <p>エラー: ${error.message}</p>
+                        <button onclick="location.reload()">リロード</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

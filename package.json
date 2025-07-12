@@ -1,0 +1,17 @@
+{
+  "name": "lt-tyusen",
+  "version": "1.0.0",
+  "description": "Presenter lottery web application",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "dev": "python3 -m http.server 8080",
+    "build": "echo 'No build process needed for static site'",
+    "deploy": "amplify publish"
+  },
+  "keywords": ["lottery", "presenter", "vanilla-js", "amplify", "aws"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

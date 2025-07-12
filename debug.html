@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Page</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .log { background: #f0f0f0; padding: 10px; margin: 5px 0; border-radius: 5px; }
+        .error { background: #ffe0e0; color: red; }
+        .success { background: #e0ffe0; color: green; }
+        button { padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Debug Fetch Test</h1>
+    
+    <button onclick="testFetch('apply')">Test Apply</button>
+    <button onclick="testFetch('draw')">Test Draw</button>
+    <button onclick="clearLogs()">Clear</button>
+    
+    <div id="logs"></div>
+
+    <script>
+        function log(message, type = 'log') {
+            const logs = document.getElementById('logs');
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            logs.appendChild(div);
+            console.log(message);
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '';
+        }
+
+        async function testFetch(pageName) {
+            log(`=== Testing ${pageName} page ===`);
+            
+            try {
+                // Test HTML
+                log(`Fetching ./pages/${pageName}.html`);
+                const htmlResponse = await fetch(`./pages/${pageName}.html`);
+                log(`HTML: ${htmlResponse.status} ${htmlResponse.statusText}`, 
+                    htmlResponse.ok ? 'success' : 'error');
+                
+                if (htmlResponse.ok) {
+                    const html = await htmlResponse.text();
+                    log(`HTML length: ${html.length}`, 'success');
+                } else {
+                    log(`HTML fetch failed: ${htmlResponse.status}`, 'error');
+                    return;
+                }
+
+                // Test CSS
+                log(`Fetching ./pages/${pageName}.css`);
+                const cssResponse = await fetch(`./pages/${pageName}.css`);
+                log(`CSS: ${cssResponse.status} ${cssResponse.statusText}`, 
+                    cssResponse.ok ? 'success' : 'error');
+                
+                if (cssResponse.ok) {
+                    const css = await cssResponse.text();
+                    log(`CSS length: ${css.length}`, 'success');
+                } else {
+                    log(`CSS fetch failed: ${cssResponse.status}`, 'error');
+                    return;
+                }
+
+                // Test JS
+                log(`Fetching ./pages/${pageName}.js`);
+                const jsResponse = await fetch(`./pages/${pageName}.js`);
+                log(`JS: ${jsResponse.status} ${jsResponse.statusText}`, 
+                    jsResponse.ok ? 'success' : 'error');
+                
+                if (jsResponse.ok) {
+                    const js = await jsResponse.text();
+                    log(`JS length: ${js.length}`, 'success');
+                } else {
+                    log(`JS fetch failed: ${jsResponse.status}`, 'error');
+                    return;
+                }
+
+                log(`All files for ${pageName} loaded successfully!`, 'success');
+
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+                log(`Error type: ${error.name}`, 'error');
+                console.error('Full error:', error);
+            }
+        }
+
+        // Test on page load
+        window.addEventListener('load', () => {
+            log('Debug page loaded');
+            log(`Location: ${window.location.href}`);
+            log(`Origin: ${window.location.origin}`);
+        });
+    </script>
+</body>
+</html>
